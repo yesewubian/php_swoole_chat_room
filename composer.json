@@ -1,0 +1,19 @@
+{
+    "name": "dearmrli/swoole_chat_room",
+    "description": "a chat room use swoole",
+    "authors": [
+        {
+            "name": "lishaoqiang",
+            "email": "lishaoqiang@zhaomoapp.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "classmap": [
+            "app/Library/"
+        ],
+        "psr-4": {
+            "Lib\\": "lib/"
+        }
+    }
+}
