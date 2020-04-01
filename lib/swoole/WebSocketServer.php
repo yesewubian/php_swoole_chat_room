@@ -14,8 +14,8 @@ class WebSocketServer
     public function __construct(string $ip = '0.0.0.0', int $port, array $setting = [])
     {
         $this->server = new Server($ip, $port);
-	$this->bindEvent();
         $this->server->set(array_merge($this->setting, $setting));
+        $this->bindEvent();
     }
 
     public function bindEvent()
