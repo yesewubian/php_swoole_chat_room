@@ -14,6 +14,7 @@ class WebSocketServer
     public function __construct(string $ip = '0.0.0.0', int $port, array $setting = [])
     {
         $this->server = new Server($ip, $port);
+	$this->bindEvent();
         $this->server->set(array_merge($this->setting, $setting));
     }
 
@@ -48,13 +49,15 @@ class WebSocketServer
         echo $request->fd . '上线' . PHP_EOL;
     }
 
-    public function onMessage(Swoole\Websocket\Server $server, Swoole\Websocket\Frame $frame)
+    public function onMessage(\Swoole\Websocket\Server $server, \Swoole\Websocket\Frame $frame)
     {
         //发言
         echo $data = $frame->fd . ' ：' . $frame->data . PHP_EOL;
         //广播
         foreach ($server->connections as $fd){
-            $server->push($fd, $data);
+	    if($fd != $frame->fd){
+            	$server->push($fd, $data);
+            }
         }
     }
 
@@ -63,7 +66,7 @@ class WebSocketServer
         echo $fd . '下线' . PHP_EOL;//打印到我们终端
     }
 
-    public function onWorkerError(Swoole\Server $server, int $worker_id, int $worker_pid, int $exit_code, int $signal)
+    public function onWorkerError(\Swoole\WebSocket\Server $server, int $worker_id, int $worker_pid, int $exit_code, int $signal)
     {
         echo 'error:' . $exit_code . PHP_EOL;//打印到我们终端
     }
