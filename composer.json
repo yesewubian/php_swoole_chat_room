@@ -9,9 +9,6 @@
     ],
     "require": {},
     "autoload": {
-        "classmap": [
-            "app/Library/"
-        ],
         "psr-4": {
             "Lib\\": "lib/"
         }
