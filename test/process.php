@@ -7,6 +7,7 @@
 
 use Swoole\Process;
 
+/*
 for ($n = 1; $n <= 3; $n++) {
     echo 'sleep 10s'.PHP_EOL;
     sleep(10);
@@ -22,3 +23,24 @@ for ($n = 3; $n > 0; $n--) {
     echo "Recycled #{$status['pid']}, code={$status['code']}, signal={$status['signal']}" . PHP_EOL;
 }
 echo 'Parent #' . getmypid() . ' exit' . PHP_EOL;
+*/
+
+function callback_function(){
+    swoole_timer_after(1000,function (){
+       echo 'hello world';
+    });
+}
+
+swoole_timer_tick(1000,function (){
+   echo 'parent timer'.PHP_EOL;
+});
+
+Process::signal(SIGCHLD,function (){
+    while ($ret = Process::wait(false)){
+        $p = new Process('callback_function');
+        $p->start();
+    }
+});
+
+$p = new Process('callback_function');
+$p->start();
