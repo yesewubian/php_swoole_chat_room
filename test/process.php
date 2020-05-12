@@ -8,7 +8,7 @@
 use Swoole\Process;
 
 for ($n = 1; $n <= 3; $n++) {
-    sleep(2);
+    sleep(10);
     $process = new Process(function () use ($n) {
         echo 'child #' . getmypid() . " start and sleep ($n)s" . PHP_EOL;
         sleep($n);
