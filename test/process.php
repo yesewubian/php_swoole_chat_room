@@ -33,6 +33,9 @@ function callback_function(){
 
 swoole_timer_tick(1000,function (){
    echo 'parent timer'.PHP_EOL;
+   foreach (\Swoole\Timer::list() as $timer_id){
+       var_dump(\Swoole\Timer::info($timer_id));
+   }
 });
 
 Process::signal(SIGCHLD,function ($sig){
