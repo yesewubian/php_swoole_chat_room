@@ -27,7 +27,7 @@ echo 'Parent #' . getmypid() . ' exit' . PHP_EOL;
 
 function callback_function(){
     swoole_timer_after(1000,function (){
-       echo 'hello world';
+       echo 'hello world'.PHP_EOL;
     });
 }
 
@@ -35,7 +35,7 @@ swoole_timer_tick(1000,function (){
    echo 'parent timer'.PHP_EOL;
 });
 
-Process::signal(SIGCHLD,function (){
+Process::signal(SIGCHLD,function ($sig){
     while ($ret = Process::wait(false)){
         $p = new Process('callback_function');
         $p->start();
