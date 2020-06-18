@@ -25,6 +25,8 @@ for ($n = 3; $n > 0; $n--) {
 echo 'Parent #' . getmypid() . ' exit' . PHP_EOL;
 */
 
+/****继承内存和文件句柄****/
+/*
 function callback_function(){
     swoole_timer_after(1000,function (){
        echo 'hello world'.PHP_EOL;
@@ -47,3 +49,20 @@ Process::signal(SIGCHLD,function ($sig){
 
 $p = new Process('callback_function');
 $p->start();
+*/
+
+$proc1 = new Process(function (Process $process){
+    $socket = $process->exportSocket();
+    echo $socket->recv();
+    $socket->send("hello master\n");
+    echo "proc1 stop\n";
+}, false,1,true);
+
+$proc1->start();
+
+Co\run(function ()use($proc1){
+   $socket = $proc1->exportSocket();
+   $socket->send("hello pro1\n");
+   var_dump($socket->recv());
+});
+Process::wait(true);
