@@ -63,6 +63,6 @@ $proc1->start();
 Co\run(function ()use($proc1){
    $socket = $proc1->exportSocket();
    $socket->send("hello pro1\n");
-   var_dump($socket->recv());
+   echo $socket->recv();
 });
 Process::wait(true);
