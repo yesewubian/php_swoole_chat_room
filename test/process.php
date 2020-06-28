@@ -59,7 +59,7 @@ $proc1 = new Process(function (Process $process){
 }, false,1,true);
 
 $proc1->start();
-
+sleep(3);
 Co\run(function ()use($proc1){
    $socket = $proc1->exportSocket();
    $socket->send("hello proc1\n");
